@@ -1,34 +1,30 @@
 import 'package:flutter/material.dart';
-import 'package:first_app/products_manager.dart';
-import 'package:first_app/products.dart';
+// import 'package:flutter/rendering.dart';
 
-main() {
+import './product_manager.dart';
+
+void main() {
+  // debugPaintSizeEnabled = true;
+  // debugPaintBaselinesEnabled = true;
+  // debugPaintPointersEnabled = true;
   runApp(MyApp());
 }
 
-class MyApp extends StatefulWidget {
+class MyApp extends StatelessWidget {
   @override
-  State<StatefulWidget> createState() {
-    return _MyAppState();
-  }
-}
-
-class _MyAppState extends State<MyApp> {
-  List<String> _products = ['Food Tester'];
-
-  build(context) {
+  Widget build(BuildContext context) {
     return MaterialApp(
-        home: Scaffold(
-                appBar: AppBar(
-                  title: Text('first app'),
-                  backgroundColor: Colors.deepPurpleAccent,
-
-                ),
-                body:
-
-                    ProductsManager('Food Tester'),
-
-                ) );
+      // debugShowMaterialGrid: true,
+      theme: ThemeData(
+          brightness: Brightness.light,
+          primarySwatch: Colors.deepOrange,
+          accentColor: Colors.deepPurple),
+      home: Scaffold(
+        appBar: AppBar(
+          title: Text('EasyList'),
+        ),
+        body: ProductManager(),
+      ),
+    );
   }
 }
-

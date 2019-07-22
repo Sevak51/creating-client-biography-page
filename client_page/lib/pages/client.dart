@@ -1,80 +1,68 @@
 import 'package:flutter/material.dart';
 
 class ClientPage extends StatelessWidget {
-  final String name;
-  final String surname;
-  final String emailAdress;
-  final String phoneNumber;
-  final String dateOfBirth;
-  final String placeOfBirth;
-  final String index;
-  final String married;
-  final String profession;
-  final String hobby;
+final  userdata;
 
   ClientPage(
-      this.name,
-      this.surname,
-      this.emailAdress,
-      this.phoneNumber,
-      this.dateOfBirth,
-      this.placeOfBirth,
-      this.index,
-      this.married,
-      this.profession,
-      this.hobby);
+      this.userdata);
+
 
   @override
-  Widget build(BuildContext context){
-  return Scaffold(
-    appBar: AppBar(
-      title: Text("Client page"),
-    ),
-    body: ListView(
-      padding: const EdgeInsets.all(8.0),
-      children: <Widget>[
-        Container(child:
-          Row(children: <Widget>[
-            Image.asset('assets/user.png',
-                height: 140.0, width: 140.0),
-            Container(
-                margin: EdgeInsets.all(50.0),
-                child:
-            Column(
-              mainAxisAlignment: MainAxisAlignment.start,
+  Widget build(BuildContext context) {
+    return Scaffold(
+        body: NestedScrollView(
+            headerSliverBuilder:
+                (BuildContext context, bool innerBoxIsScrolled) {
+              return <Widget>[
+                SliverAppBar(
+                  expandedHeight: 300.0,
+                  floating: false,
+                  pinned: true,
+                  actions: <Widget>[
+                    IconButton(icon: Icon(Icons.edit), onPressed: null),
+                    IconButton(icon: Icon(Icons.more_vert), onPressed: null)
+                  ],
+                  flexibleSpace: FlexibleSpaceBar(
+                      centerTitle: false,
+                      title: Text('uyguyg',
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 21.0,
+                          )),
+                      background: Container(
+                          decoration: BoxDecoration(
+                            image: DecorationImage(image: ExactAssetImage("assets/download"),
+                            fit: BoxFit.cover
+                            )
+                          ),
+)),
+                ),
+              ];
+            },
+            body: Column(
               children: <Widget>[
-                Text(
-                  placeOfBirth,
-                  style: TextStyle(fontSize: 15.0),
+                ListTile(
+                  leading: Icon(Icons.phone),
+                  title: Text('fghfghfghfghf'),
+                  subtitle: Text("Mobile"),
                 ),
-                Text(
-                  index,
-                  style: TextStyle(fontSize: 15.0),
+                ListTile(
+                  title: Text("(374)47941945"),
+                  subtitle: Text("Home"),
+                  leading: Icon(Icons.phone),
                 ),
-                Text(
-                  married,
-                  style: TextStyle(fontSize: 15.0),
+                Divider(),
+                ListTile(
+                  leading: Icon(Icons.local_post_office),
+                  title: Text("levon@gmail.com"),
+                  subtitle: Text("Personal"),
                 ),
-                Text(
-                  profession,
-                  style: TextStyle(fontSize: 15.0),
-                ),
-                Text(
-                  hobby,
-                  style: TextStyle(fontSize: 15.0),
+                ListTile(
+                  leading: Icon(Icons.calendar_today),
+                  title: Text("02.06.2002"),
+                  subtitle: Text("Day of birth"),
                 ),
               ],
-            )),
-
-      ],),
-        ),
-        Text(name, style: TextStyle(fontSize: 15.0),),
-Text(surname, style: TextStyle(fontSize: 15.0),),
-Text(emailAdress, style: TextStyle(fontSize: 15.0),),
-Text(phoneNumber, style: TextStyle(fontSize: 15.0),),
-Text(dateOfBirth, style: TextStyle(fontSize: 15.0),)
-      ],
-
-    ),
-  );}
+            )));
+  }
 }

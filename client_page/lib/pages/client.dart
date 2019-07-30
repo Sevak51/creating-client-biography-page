@@ -1,11 +1,9 @@
 import 'package:flutter/material.dart';
 
 class ClientPage extends StatelessWidget {
-final  userdata;
+  final userdata;
 
-  ClientPage(
-      this.userdata);
-
+  ClientPage(this.userdata);
 
   @override
   Widget build(BuildContext context) {
@@ -24,45 +22,55 @@ final  userdata;
                   ],
                   flexibleSpace: FlexibleSpaceBar(
                       centerTitle: false,
-                      title: Text('uyguyg',
+                      title: Text(
+                          userdata['name'].toString() +
+                              userdata['surname'].toString(),
                           style: TextStyle(
                             color: Colors.white,
                             fontSize: 21.0,
                           )),
                       background: Container(
-                          decoration: BoxDecoration(
-                            image: DecorationImage(image: ExactAssetImage("assets/download"),
-                            fit: BoxFit.cover
-                            )
-                          ),
-)),
+                        decoration: BoxDecoration(
+                            image: DecorationImage(
+                                image: ExactAssetImage("assets/download"),
+                                fit: BoxFit.cover)),
+                      )),
                 ),
               ];
             },
-            body: Column(
-              children: <Widget>[
-                ListTile(
-                  leading: Icon(Icons.phone),
-                  title: Text('fghfghfghfghf'),
-                  subtitle: Text("Mobile"),
-                ),
-                ListTile(
-                  title: Text("(374)47941945"),
-                  subtitle: Text("Home"),
-                  leading: Icon(Icons.phone),
-                ),
-                Divider(),
-                ListTile(
-                  leading: Icon(Icons.local_post_office),
-                  title: Text("levon@gmail.com"),
-                  subtitle: Text("Personal"),
-                ),
-                ListTile(
-                  leading: Icon(Icons.calendar_today),
-                  title: Text("02.06.2002"),
-                  subtitle: Text("Day of birth"),
-                ),
-              ],
-            )));
+            body: GestureDetector(
+                behavior: HitTestBehavior.opaque,
+                onTap: () {
+                  FocusScope.of(context).requestFocus(new FocusNode());
+                },
+                child: ListView(
+                  children: <Widget>[
+                    ListTile(
+                      leading: Icon(Icons.phone),
+                      title: Text(userdata['phoneNumber'].toString()),
+                      subtitle: Text("Mobile"),
+                    ),
+                    ListTile(
+                      title: Text(userdata['placeOfBirth'].toString()),
+                      subtitle: Text('place of birth'),
+                      leading: Icon(Icons.location_on),
+                    ),
+                    Divider(),
+                    ListTile(
+                      leading: Icon(Icons.local_post_office),
+                      title: Text(userdata['emailAdress'].toString()),
+                      subtitle: Text("Personal"),
+                    ),
+                    ListTile(
+                      leading: Icon(Icons.calendar_today),
+                      title: Text(userdata['date'].toString()),
+                      subtitle: Text("Date of birth"),
+                    ),
+                    ListTile(
+                      title: Text(userdata['gender'].toString()),
+                      subtitle: Text("Gender"),
+                    ),
+                  ],
+                ))));
   }
 }

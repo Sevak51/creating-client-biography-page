@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:client_page/pages/client.dart';
+import 'package:intl/intl.dart';
+import 'package:datetime_picker_formfield/datetime_picker_formfield.dart';
 
 class FirstPageBody extends StatefulWidget {
   @override
@@ -7,33 +9,46 @@ class FirstPageBody extends StatefulWidget {
 }
 
 class _FirstPageBodyState extends State<FirstPageBody> {
+  bool editable = false;
+  final dateFormat = DateFormat("EEEE, MMMM d, yyyy");
+  DateTime date;
   @override
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
+  Map<String, dynamic> _userdata = {
+    "name": null,
+    "surname": null,
+    "emailAdress": null,
+    "phoneNumber": null,
+    "dateOfBirth": null,
+    "placeOfBirth": null,
+    "index": null,
+    "married": null,
+    "profession": null,
+    "hobby": null,
+    "date": null,
+    "gender": null
+  };
 
-  String name;
-  String surname;
-  String emailAdress;
-  String phoneNumber;
-  String dateOfBirth;
-  String placeOfBirth;
-  String index;
-  String married;
-  String profession;
-  String hobby;
-
- Map<String,dynamic> _userdata = {
-   "name": null,
-   "surname" : null,
-   "emailAdress" : null,
-   "phoneNumber" : null,
-   "dateOfBirth" : null,
-   "placeOfBirth" : null,
-   "index" : null,
-   "married" : null,
-   "profession" : null,
-   "hobby" : null,
-};
+  DropdownButton _dropdown() => DropdownButton<String>(
+        items: [
+          DropdownMenuItem<String>(
+            value: 'Male',
+            child: Text('Male'),
+          ),
+          DropdownMenuItem<String>(
+            value: 'Female',
+            child: Text('Female'),
+          ),
+        ],
+        hint: Text('Choose your gender'),
+        onChanged: (value) {
+          setState(() {
+            _userdata['gender'] = value;
+          });
+        },
+        value: _userdata['gender'],
+      );
 
   Widget build(BuildContext context) {
     return Scaffold(
@@ -47,7 +62,7 @@ class _FirstPageBodyState extends State<FirstPageBody> {
               TextFormField(
                 onFieldSubmitted: (String value) {
                   setState(() {
-                    name = value;
+                    _userdata['name'] = value;
                   });
                 },
                 decoration: InputDecoration(labelText: "name"),
@@ -61,7 +76,7 @@ class _FirstPageBodyState extends State<FirstPageBody> {
               TextFormField(
                 onFieldSubmitted: (String value) {
                   setState(() {
-                    surname = value;
+                    _userdata['surname'] = value;
                   });
                 },
                 decoration: InputDecoration(labelText: "surname"),
@@ -72,10 +87,11 @@ class _FirstPageBodyState extends State<FirstPageBody> {
                   return null;
                 },
               ),
+              _dropdown(),
               TextFormField(
                 onFieldSubmitted: (String value) {
                   setState(() {
-                    emailAdress = value;
+                    _userdata['emailAdress'] = value;
                   });
                 },
                 decoration: InputDecoration(labelText: "email adress"),
@@ -89,7 +105,7 @@ class _FirstPageBodyState extends State<FirstPageBody> {
               TextFormField(
                 onFieldSubmitted: (String value) {
                   setState(() {
-                    phoneNumber = value;
+                    _userdata['phoneNumber'] = value;
                   });
                 },
                 decoration: InputDecoration(labelText: "phone number"),
@@ -101,24 +117,24 @@ class _FirstPageBodyState extends State<FirstPageBody> {
                 },
                 keyboardType: TextInputType.number,
               ),
-              TextFormField(
-                  onFieldSubmitted: (String value) {
-                    setState(() {
-                      dateOfBirth = value;
-                    });
-                  },
-                  decoration: InputDecoration(labelText: "date of birth"),
-                  keyboardType: TextInputType.number,
-                  validator: (value) {
-                    if (value.isEmpty) {
-                      return 'Enter some text';
-                    }
-                    return null;
-                  }),
+//              TextFormField(
+//                  onFieldSubmitted: (String value) {
+//                    setState(() {
+//                      _userdata['dateOfBirth'] = value;
+//                    });
+//                  },
+//                  decoration: InputDecoration(labelText: "date of birth"),
+//                  keyboardType: TextInputType.number,
+//                  validator: (value) {
+//                    if (value.isEmpty) {
+//                      return 'Enter some text';
+//                    }
+//                    return null;
+//                  }),
               TextFormField(
                 onFieldSubmitted: (String value) {
                   setState(() {
-                    placeOfBirth = value;
+                    _userdata['placeOfBirth'] = value;
                   });
                 },
                 decoration: InputDecoration(labelText: "place of birth"),
@@ -132,7 +148,7 @@ class _FirstPageBodyState extends State<FirstPageBody> {
               TextFormField(
                   onFieldSubmitted: (String value) {
                     setState(() {
-                      index = value;
+                      _userdata['index'] = value;
                     });
                   },
                   decoration: InputDecoration(labelText: "user index"),
@@ -143,23 +159,13 @@ class _FirstPageBodyState extends State<FirstPageBody> {
                     }
                     return null;
                   }),
+                    Switch(
+                        value: null,
+                        onChanged: null),
               TextFormField(
                   onFieldSubmitted: (String value) {
                     setState(() {
-                      married = value;
-                    });
-                  },
-                  decoration: InputDecoration(labelText: "married or not"),
-                  validator: (value) {
-                    if (value.isEmpty) {
-                      return 'Enter some text';
-                    }
-                    return null;
-                  }),
-              TextFormField(
-                  onFieldSubmitted: (String value) {
-                    setState(() {
-                      profession = value;
+                      _userdata['profession'] = value;
                     });
                   },
                   decoration: InputDecoration(labelText: "profession"),
@@ -172,7 +178,7 @@ class _FirstPageBodyState extends State<FirstPageBody> {
               TextFormField(
                   onFieldSubmitted: (String value) {
                     setState(() {
-                      hobby = value;
+                      _userdata['hobby'] = value;
                     });
                   },
                   decoration: InputDecoration(labelText: "hobby"),
@@ -182,17 +188,29 @@ class _FirstPageBodyState extends State<FirstPageBody> {
                     }
                     return null;
                   }),
-
+              Container(
+                child: Column(
+                  children: <Widget>[
+                    DateTimePickerFormField(
+                      dateOnly: true,
+                      format: dateFormat,
+                      decoration: InputDecoration(labelText: 'Date of birth'),
+                      onChanged: (dt) => setState(() => _userdata["date"] = dt),
+                    ),
+                  ],
+                ),
+              ),
 
               RaisedButton(
                 onPressed: () {
-                  if(_formKey.currentState.validate()){
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => ClientPage(
-                              _userdata       )));
-                }},
+//                  print(_userdata.toString());
+                  if (_formKey.currentState.validate()) {
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => ClientPage(_userdata)));
+                  }
+                },
                 color: Theme.of(context).primaryColor,
                 child: Text("Save"),
               )

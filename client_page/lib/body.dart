@@ -23,7 +23,7 @@ class _FirstPageBodyState extends State<FirstPageBody> {
     "dateOfBirth": null,
     "placeOfBirth": null,
     "index": null,
-    "married": null,
+    "married": false,
     "profession": null,
     "hobby": null,
     "date": null,
@@ -59,64 +59,78 @@ class _FirstPageBodyState extends State<FirstPageBody> {
           key: _formKey,
           child: ListView(
             children: <Widget>[
-              TextFormField(
-                onFieldSubmitted: (String value) {
-                  setState(() {
-                    _userdata['name'] = value;
-                  });
-                },
-                decoration: InputDecoration(labelText: "name"),
-                validator: (value) {
-                  if (value.isEmpty) {
-                    return 'Enter some text';
-                  }
-                  return null;
-                },
-              ),
-              TextFormField(
-                onFieldSubmitted: (String value) {
-                  setState(() {
-                    _userdata['surname'] = value;
-                  });
-                },
-                decoration: InputDecoration(labelText: "surname"),
-                validator: (value) {
-                  if (value.isEmpty) {
-                    return 'Enter some text';
-                  }
-                  return null;
-                },
-              ),
-              _dropdown(),
-              TextFormField(
-                onFieldSubmitted: (String value) {
-                  setState(() {
-                    _userdata['emailAdress'] = value;
-                  });
-                },
-                decoration: InputDecoration(labelText: "email adress"),
-                validator: (value) {
-                  if (value.isEmpty) {
-                    return 'Enter some text';
-                  }
-                  return null;
-                },
-              ),
-              TextFormField(
-                onFieldSubmitted: (String value) {
-                  setState(() {
-                    _userdata['phoneNumber'] = value;
-                  });
-                },
-                decoration: InputDecoration(labelText: "phone number"),
-                validator: (value) {
-                  if (value.isEmpty) {
-                    return 'Enter some text';
-                  }
-                  return null;
-                },
-                keyboardType: TextInputType.number,
-              ),
+              Container(
+                margin: EdgeInsets.all(16.0),
+                child: Column(
+                  children: <Widget>[
+                    TextFormField(
+                      onFieldSubmitted: (String value) {
+                        setState(() {
+                          _userdata['name'] = value;
+                        });
+                      },
+                      decoration: InputDecoration(labelText: "name"),
+                      validator: (value) {
+                        if (value.isEmpty) {
+                          return 'Enter some text';
+                        }
+                        return null;
+                      },
+                    ),
+                    TextFormField(
+                      onFieldSubmitted: (String value) {
+                        setState(() {
+                          _userdata['surname'] = value;
+                        });
+                      },
+                      decoration: InputDecoration(labelText: "surname"),
+                      validator: (value) {
+                        if (value.isEmpty) {
+                          return 'Enter some text';
+                        }
+                        return null;
+                      },
+                    ),
+                    _dropdown(),
+                    SwitchListTile(value: _userdata['married'], onChanged:(value){
+                      setState(() {
+
+
+                        _userdata['married'] = value;
+
+                      });
+
+                    },
+                      title: Text('Married'),),
+                    TextFormField(
+                      onFieldSubmitted: (String value) {
+                        setState(() {
+                          _userdata['emailAdress'] = value;
+                        });
+                      },
+                      decoration: InputDecoration(labelText: "email adress"),
+                      validator: (value) {
+                        if (value.isEmpty) {
+                          return 'Enter some text';
+                        }
+                        return null;
+                      },
+                    ),
+                    TextFormField(
+                      onFieldSubmitted: (String value) {
+                        setState(() {
+                          _userdata['phoneNumber'] = value;
+                        });
+                      },
+                      decoration: InputDecoration(labelText: "phone number"),
+                      validator: (value) {
+                        if (value.isEmpty) {
+                          return 'Enter some text';
+                        }
+                        return null;
+                      },
+                      keyboardType: TextInputType.number,
+                    ),
 //              TextFormField(
 //                  onFieldSubmitted: (String value) {
 //                    setState(() {
@@ -131,90 +145,92 @@ class _FirstPageBodyState extends State<FirstPageBody> {
 //                    }
 //                    return null;
 //                  }),
-              TextFormField(
-                onFieldSubmitted: (String value) {
-                  setState(() {
-                    _userdata['placeOfBirth'] = value;
-                  });
-                },
-                decoration: InputDecoration(labelText: "place of birth"),
-                validator: (value) {
-                  if (value.isEmpty) {
-                    return 'Enter some text';
-                  }
-                  return null;
-                },
-              ),
-              TextFormField(
-                  onFieldSubmitted: (String value) {
-                    setState(() {
-                      _userdata['index'] = value;
-                    });
-                  },
-                  decoration: InputDecoration(labelText: "user index"),
-                  keyboardType: TextInputType.number,
-                  validator: (value) {
-                    if (value.isEmpty) {
-                      return 'Enter some text';
-                    }
-                    return null;
-                  }),
-                    Switch(
-                        value: null,
-                        onChanged: null),
-              TextFormField(
-                  onFieldSubmitted: (String value) {
-                    setState(() {
-                      _userdata['profession'] = value;
-                    });
-                  },
-                  decoration: InputDecoration(labelText: "profession"),
-                  validator: (value) {
-                    if (value.isEmpty) {
-                      return 'Enter some text';
-                    }
-                    return null;
-                  }),
-              TextFormField(
-                  onFieldSubmitted: (String value) {
-                    setState(() {
-                      _userdata['hobby'] = value;
-                    });
-                  },
-                  decoration: InputDecoration(labelText: "hobby"),
-                  validator: (value) {
-                    if (value.isEmpty) {
-                      return 'Enter some text';
-                    }
-                    return null;
-                  }),
-              Container(
-                child: Column(
-                  children: <Widget>[
-                    DateTimePickerFormField(
-                      dateOnly: true,
-                      format: dateFormat,
-                      decoration: InputDecoration(labelText: 'Date of birth'),
-                      onChanged: (dt) => setState(() => _userdata["date"] = dt),
+                    TextFormField(
+                      onFieldSubmitted: (String value) {
+                        setState(() {
+                          _userdata['placeOfBirth'] = value;
+                        });
+                      },
+                      decoration: InputDecoration(labelText: "place of birth"),
+                      validator: (value) {
+                        if (value.isEmpty) {
+                          return 'Enter some text';
+                        }
+                        return null;
+                      },
                     ),
+                    TextFormField(
+                        onFieldSubmitted: (String value) {
+                          setState(() {
+                            _userdata['index'] = value;
+                          });
+                        },
+                        decoration: InputDecoration(labelText: "user index"),
+                        keyboardType: TextInputType.number,
+                        validator: (value) {
+                          if (value.isEmpty) {
+                            return 'Enter some text';
+                          }
+                          return null;
+                        }),
+
+                    TextFormField(
+                        onFieldSubmitted: (String value) {
+                          setState(() {
+                            _userdata['profession'] = value;
+                          });
+                        },
+                        decoration: InputDecoration(labelText: "profession"),
+                        validator: (value) {
+                          if (value.isEmpty) {
+                            return 'Enter some text';
+                          }
+                          return null;
+                        }),
+                    TextFormField(
+                        onFieldSubmitted: (String value) {
+                          setState(() {
+                            _userdata['hobby'] = value;
+                          });
+                        },
+                        decoration: InputDecoration(labelText: "hobby"),
+                        validator: (value) {
+                          if (value.isEmpty) {
+                            return 'Enter some text';
+                          }
+                          return null;
+                        }),
+                    Container(
+                      child: Column(
+                        children: <Widget>[
+                          DateTimePickerFormField(
+                            dateOnly: true,
+                            format: dateFormat,
+                            decoration: InputDecoration(labelText: 'Date of birth'),
+                            onChanged: (dt) => setState(() => _userdata["date"] = dt),
+                          ),
+                        ],
+                      ),
+                    ),
+
+                    RaisedButton(
+                      onPressed: () {
+//                  print(_userdata.toString());
+                        if (_formKey.currentState.validate()) {
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => ClientPage(_userdata)));
+                        }
+                      },
+                      color: Theme.of(context).primaryColor,
+                      child: Text("Save"),
+                    )
+
                   ],
                 ),
-              ),
-
-              RaisedButton(
-                onPressed: () {
-//                  print(_userdata.toString());
-                  if (_formKey.currentState.validate()) {
-                    Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => ClientPage(_userdata)));
-                  }
-                },
-                color: Theme.of(context).primaryColor,
-                child: Text("Save"),
               )
-            ],
+             ],
           ),
         ));
   }

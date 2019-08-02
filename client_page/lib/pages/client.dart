@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
 
+
+
+
+
 class ClientPage extends StatelessWidget {
   final userdata;
 
@@ -7,6 +11,26 @@ class ClientPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    if (userdata["gender"]=="Male"){
+      userdata["gender"]=Row(children: <Widget>[
+        Icon(Icons.group),
+        Text("Male")
+      ],);
+    }
+    else{
+      userdata["gender"]=Row(
+        children: <Widget>[
+          Icon(Icons.group)
+        ],
+      );
+    }
+
+    if (userdata["married"] == true) {
+      userdata["married"] = Text("Married");
+    } else {
+      userdata["married"] = Text("Not married");
+    }
+
     return Scaffold(
         body: NestedScrollView(
             headerSliverBuilder:
@@ -46,6 +70,19 @@ class ClientPage extends StatelessWidget {
                 child: ListView(
                   children: <Widget>[
                     ListTile(
+                      title: Text(userdata['gender'].toString()),
+                      subtitle: Text("Gender"),
+                    ),
+                    ListTile(
+                      title: userdata["married"],
+                      // subtitle: Text(userdata['married'].toString()),
+                    ),
+                    ListTile(
+                      leading: Icon(Icons.calendar_today),
+                      title: Text(userdata['date'].toString()),
+                      subtitle: Text("Date of birth"),
+                    ),
+                    ListTile(
                       leading: Icon(Icons.phone),
                       title: Text(userdata['phoneNumber'].toString()),
                       subtitle: Text("Mobile"),
@@ -60,15 +97,6 @@ class ClientPage extends StatelessWidget {
                       leading: Icon(Icons.local_post_office),
                       title: Text(userdata['emailAdress'].toString()),
                       subtitle: Text("Personal"),
-                    ),
-                    ListTile(
-                      leading: Icon(Icons.calendar_today),
-                      title: Text(userdata['date'].toString()),
-                      subtitle: Text("Date of birth"),
-                    ),
-                    ListTile(
-                      title: Text(userdata['gender'].toString()),
-                      subtitle: Text("Gender"),
                     ),
                   ],
                 ))));
